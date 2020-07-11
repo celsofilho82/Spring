@@ -4,16 +4,47 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Topico {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String titulo;
 	private String mensagem;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+
+	// Guarda o nome da constante ao invés da ordem de declaração do ENUM
+	@Enumerated(EnumType.STRING)
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
+
+	// Cardinalidade muitos para um
+	@ManyToOne
 	private Usuario autor;
+
+	// Cardinalidade muitos para um
+	@ManyToOne
 	private Curso curso;
+
+	// Cardinalidade um para muitos(um tópico varias respostas)
+	// devemos passar o nome do atributo dá classe resposta(topico)
+	@OneToMany(mappedBy = "topico")
 	private List<Resposta> respostas = new ArrayList<>();
+
+	public Topico() {
+		// A JPA necessita de um contrutor padrão para maperar a classe para um entidade
+		// no banco de dados
+	}
 
 	public Topico(String titulo, String mensagem, Curso curso) {
 		this.titulo = titulo;

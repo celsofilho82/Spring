@@ -1,16 +1,14 @@
 package br.com.alura.forum.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.forum.controller.dto.TopicoDTO;
-import br.com.alura.forum.model.Curso;
 import br.com.alura.forum.model.Topico;
+import br.com.alura.forum.repository.TopicoRepository;
 
 //Essa classe será responsável por devolver uma lista com todos os tópicos cadastrados
 
@@ -20,16 +18,30 @@ import br.com.alura.forum.model.Topico;
 // @ResponseBody Indicar ao Spring que o retorno do método deve ser devolvido
 // como resposta sem isso, o controller encaminha a requisição a uma página JSP, ou Thymeleaf
 
-// O Spring, por padrão, converte os dados no formato JSON, utilizando a biblioteca Jackson
+// O Spring, por padrão, converte os dados no formato JSON, utilizando a biblioteca Jackson 
+
+// @Autowired fazendo a injeção de dependência na classe controller
+
+// Na implementação do Spring Data JPA é possível criar consultas que filtram por atributos 
+// da entidade, devemos seguir o padrão de nomenclatura de métodos do Spring, como por exemplo findByCursoNome
 
 @RestController
 public class TopicosController {
 
-	@RequestMapping("/topicos")
-	public List<TopicoDTO> lista() {
-		Topico topico = new Topico("Duvida", "Duvida com Spring", new Curso("Spring", "Programação"));
+	@Autowired
+	private TopicoRepository topicoRepository;
 
-		return TopicoDTO.converter(Arrays.asList(topico, topico, topico));
+	@RequestMapping("/topicos")
+	public List<TopicoDTO> lista(String nomeCurso) {
+
+		if (nomeCurso == null) {
+			List<Topico> topicos = topicoRepository.findAll();
+			return TopicoDTO.converter(topicos);
+		} else {
+			List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
+			return TopicoDTO.converter(topicos);
+		}
+
 	}
 
 }

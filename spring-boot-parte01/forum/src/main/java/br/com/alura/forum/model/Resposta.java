@@ -2,12 +2,27 @@ package br.com.alura.forum.model;
 
 import java.time.LocalDateTime;
 
-public class Resposta {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Resposta {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String mensagem;
+	
+	// Cardinalidade muitos para um
+	@ManyToOne
 	private Topico topico;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+	
+	// Cardinalidade muitos para um
+	@ManyToOne
 	private Usuario autor;
 	private Boolean solucao = false;
 
