@@ -2,19 +2,26 @@ package br.com.alura.forum.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.alura.forum.controller.dto.DetalhesTopicoDTO;
 import br.com.alura.forum.controller.dto.TopicoDTO;
+import br.com.alura.forum.controller.form.AtualizacaoTopicoForm;
 import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.model.Topico;
 import br.com.alura.forum.repository.CursoRepository;
@@ -49,6 +56,17 @@ import br.com.alura.forum.repository.TopicoRepository;
 // @Valid Para o Spring disparar as validações do Bean Validation e devolver um erro 400, 
 // caso alguma informação enviada pelo cliente esteja inválida
 
+// @PathVariable indica ao Spring que vamos receber parâmetros dinâmicos no path da URL
+
+// @PutMapping indica ao Spring que vamos mapear requisições do tipo PUT.
+
+// @Transactional Ao finalizar o método, o Spring efetuará o commit automático da transação, 
+// caso nenhuma exception tenha sido lançada. Métodos anotados com @Transactional serão executados 
+// dentro de um contexto transacional. Os métodos cadastar, atualizar e remover devem ser executados
+// dentro de uma transação.
+
+// @DeleteMapping mapear requisições do tipo DELETE.
+
 @RestController
 @RequestMapping("/topicos")
 public class TopicosController {
@@ -72,6 +90,7 @@ public class TopicosController {
 	}
 
 	@PostMapping
+	@Transactional
 	public ResponseEntity<TopicoDTO> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
 		Topico topico = form.converter(cursoRepository);
 
@@ -80,5 +99,49 @@ public class TopicosController {
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(new TopicoDTO(topico));
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<DetalhesTopicoDTO> detalhar(@PathVariable Long id) {
+
+		// O findById retorna um objeto Optional<>, que pode ou não conter um objeto.
+		Optional<Topico> topico = topicoRepository.findById(id);
+
+		if (topico.isPresent()) {
+			// topico.get() obtém o tópico que está dentro do optional
+			return ResponseEntity.ok(new DetalhesTopicoDTO(topico.get()));
+		}
+
+		return ResponseEntity.notFound().build();
+	}
+
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<TopicoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
+
+		Optional<Topico> optional = topicoRepository.findById(id);
+
+		if (optional.isPresent()) {
+			Topico topico = form.atualizar(id, topicoRepository);
+			return ResponseEntity.ok(new TopicoDTO(topico));
+		}
+
+		return ResponseEntity.notFound().build();
+	}
+
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> remover(@PathVariable Long id) {
+
+		Optional<Topico> optional = topicoRepository.findById(id);
+
+		if (optional.isPresent()) {
+			topicoRepository.deleteById(id);
+
+			return ResponseEntity.ok().build();
+		}
+
+		return ResponseEntity.notFound().build();
+
 	}
 }
