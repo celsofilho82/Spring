@@ -1,17 +1,40 @@
 package br.com.alura.forum.controller.form;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import br.com.alura.forum.model.Curso;
 import br.com.alura.forum.model.Topico;
 import br.com.alura.forum.repository.CursoRepository;
-import br.com.alura.forum.repository.TopicoRepository;
 
 public class TopicoForm {
 
 	// Utilizaremos essa classe para receber os dados enviado e realizar a criação
 	// de um objeto tópico
 
+	// Usamos as anotações de validação do Bean Validation para fazer validações das
+	// informações enviadas pelos clientes da API
+	
+	// Tamanho minimo de caracteres @Length(min = 5)
+	
+	// Não pode ser nulo @NotNull
+	
+	// Não pode ser vazio @NotEmpty
+
+	@NotNull
+	@NotEmpty
+	@Length(min = 5)
 	private String titulo;
+
+	@NotNull
+	@NotEmpty
+	@Length(min = 10)
 	private String mensagem;
+
+	@NotNull
+	@NotEmpty
 	private String nomeCurso;
 
 	public String getTitulo() {
