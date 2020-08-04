@@ -1,18 +1,36 @@
 package br.com.alura.forum.modelo;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	// Para implementar o controle de autenticação na API, devemos implementar a
+	// interface UserDetails na classe Usuario
+	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String email;
 	private String senha;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Perfil> perfis = new ArrayList<Perfil>();
 
 	@Override
 	public int hashCode() {
@@ -69,6 +87,48 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// Retorna a coleção com os perfis do usuário
+		return this.perfis;
+	}
+
+	@Override
+	public String getPassword() {
+		// Este método devolve qual o atributo que representa a senha do usuário
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		// Este método devolve qual o atributo que representa o nome do usuário
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// Método que informa se a conta não está expirada
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// retorna se a conta não está bloqueada
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// Verifica se a credencial não está expirada
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// Verifica se a conta está habilitada
+		return true;
 	}
 
 }

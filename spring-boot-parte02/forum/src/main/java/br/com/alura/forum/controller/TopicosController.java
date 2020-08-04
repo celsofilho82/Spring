@@ -7,8 +7,9 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -45,10 +46,15 @@ public class TopicosController {
 	// @RequestParam indica ao spring que teremos parametros enviados atráves da
 	// url. Argumento required = false indica que esse parametro não é obrigatório.
 
+	// @Cacheable indica ao spring para guardar o retorno dessa consulta em cache
+	// passando value = "listaDeTopicos" como identificador único desse cache
+
 	// Alterando o método lista para retorar um objeto Page para realizarmos a
 	// paginação Ao utilizar o objeto Page, além de devolver os registros, o Spring
 	// também devolve informações sobre a paginação no JSON de resposta.
+
 	@GetMapping
+	@Cacheable(value = "listaDeTopicos")
 	public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso,
 			@PageableDefault(sort = "id", direction = Direction.DESC) Pageable paginacao) {
 
@@ -65,8 +71,12 @@ public class TopicosController {
 		}
 	}
 
+	// @CacheEvict: Indica ao spring que quando houver uma alteração na base de
+	// dados invalidar todas as entradas do id do cache passado no parametro value
+
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
 		Topico topico = form.converter(cursoRepository);
 		topicoRepository.save(topico);
@@ -87,6 +97,7 @@ public class TopicosController {
 
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
 		Optional<Topico> optional = topicoRepository.findById(id);
 		if (optional.isPresent()) {
@@ -99,6 +110,7 @@ public class TopicosController {
 
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<?> remover(@PathVariable Long id) {
 		Optional<Topico> optional = topicoRepository.findById(id);
 		if (optional.isPresent()) {
