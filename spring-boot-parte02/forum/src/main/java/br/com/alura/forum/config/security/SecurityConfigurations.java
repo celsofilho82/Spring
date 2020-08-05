@@ -1,13 +1,16 @@
 package br.com.alura.forum.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 // Para habilitar e configurar o controle de autenticação e autorização 
@@ -21,6 +24,15 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AutenticacaoService autenticacaoService;
+
+	@Override
+	@Bean
+	protected AuthenticationManager authenticationManager() throws Exception {
+		// Para poder injetar o AuthenticationManager no controller, devemos criar um
+		// método anotado com @Bean, na classe SecurityConfigurations, que retorna uma
+		// chamada ao método super.authenticationManager();
+		return super.authenticationManager();
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -49,8 +61,14 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		// Para o Spring Security gerar automaticamente um formulário de login, devemos
 		// chamar o método and().formLogin().
 
+		// Para configurar a autenticação stateless no Spring Security, devemos utilizar
+		// o método
+		// sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/topicos").permitAll()
-				.antMatchers(HttpMethod.GET, "/topicos/*").permitAll().anyRequest().authenticated().and().formLogin();
+				.antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	@Override
