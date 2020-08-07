@@ -33,6 +33,8 @@ public class AutenticacaoController {
 	public ResponseEntity<TokenDto> autenticar(@RequestBody @Valid LoginForm form) {
 		UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 
+		// Para enviar o token JWT na requisição, é necessário adicionar o cabeçalho
+		// Authorization, passando como valor Bearer token;
 		try {
 			Authentication authentication = authManager.authenticate(dadosLogin);
 			String token = tokenService.gerarToken(authentication);

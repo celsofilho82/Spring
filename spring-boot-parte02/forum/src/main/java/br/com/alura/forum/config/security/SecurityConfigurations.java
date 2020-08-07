@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import br.com.alura.forum.repository.UsuarioRepository;
 
 // Para habilitar e configurar o controle de autenticação e autorização 
 // do projeto, devemos criar uma classe e anotá-la com @Configuration e @EnableWebSecurity;
@@ -24,6 +27,12 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AutenticacaoService autenticacaoService;
+
+	@Autowired
+	private TokenService tokenService;
+
+	@Autowired
+	private UsuarioRepository repository;
 
 	@Override
 	@Bean
@@ -65,10 +74,16 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		// o método
 		// sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
+		// Para habilitar o filtro no Spring Security, devemos chamar o método
+		// and().addFilterBefore(new AutenticacaoViaTokenFilter(),
+		// UsernamePasswordAuthenticationFilter.class);
+
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/topicos").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
 				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository),
+						UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
