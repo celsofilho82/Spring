@@ -77,8 +77,12 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		// Para habilitar o filtro no Spring Security, devemos chamar o método
 		// and().addFilterBefore(new AutenticacaoViaTokenFilter(),
 		// UsernamePasswordAuthenticationFilter.class);
+		
+		// Para liberar acesso ao Actuator no Spring Security, devemos chamar o 
+		// método .antMatchers(HttpMethod.GET, "/actuator/**");
 
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/topicos").permitAll()
+				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
 				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
