@@ -77,24 +77,28 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		// Para habilitar o filtro no Spring Security, devemos chamar o método
 		// and().addFilterBefore(new AutenticacaoViaTokenFilter(),
 		// UsernamePasswordAuthenticationFilter.class);
-		
-		// Para liberar acesso ao Actuator no Spring Security, devemos chamar o 
+
+		// Para liberar acesso ao Actuator no Spring Security, devemos chamar o
 		// método .antMatchers(HttpMethod.GET, "/actuator/**");
 
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/topicos").permitAll()
-				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-				.antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
-				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll().antMatchers(HttpMethod.POST, "/auth")
+				.permitAll().antMatchers(HttpMethod.GET, "/topicos/*").permitAll().anyRequest().authenticated().and()
+				.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, repository),
 						UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// Este método é responsável pelas configurações de recuros staticos como
-		// requisiçoes para arquivos css, js, imagens e etc
 
+		// Para liberar acesso ao Swagger no Spring Security, devemos chamar o seguinte
+		// método web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**",
+		// "/configuration/**", "/swagger-resources/**"), dentro do método void
+		// configure(WebSecurity web), que está na classe SecurityConfigurations.
+		
+		web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**",
+				"/swagger-resources/**");
 	}
 
 }
