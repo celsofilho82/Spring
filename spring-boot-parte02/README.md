@@ -99,9 +99,9 @@
         Projeto do curso
         O que aprendemos?
         Conclusão
-<!-- 
+
 # Certificado de conclusão
 
-https://cursos.alura.com.br/certificate/63ce10d8-3037-4bab-b566-8d46e9747209
+https://cursos.alura.com.br/certificate/d6758f8e-9fc8-4eb2-a775-ea431ff0ce21
 
-![certificado](certificate-alura.png) -->
+![certificado](certificate-alura.png)
