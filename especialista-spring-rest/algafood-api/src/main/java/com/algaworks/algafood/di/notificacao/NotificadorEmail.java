@@ -1,16 +1,15 @@
 package com.algaworks.algafood.di.notificacao;
 
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.di.modelo.Cliente;
 
-@Primary
+@Qualifier("email")
 @Component
 public class NotificadorEmail implements Notificador {
 
-	// Usando a anotação @Primary para resolver conflitos de ambiguidade em uma
-	// classe do mesmo tipo
+	// Usando a anotação @Qualifier para qualificar o componente e inserir um identificador 
 
 	@Override
 	public void notificar(Cliente cliente, String mensagem) {
