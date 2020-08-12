@@ -1,15 +1,13 @@
 package com.algaworks.algafood.di.notificacao;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.di.modelo.Cliente;
 
-@Qualifier("email")
+//Usando a anotação customizada para definir um qualificador para a classe
+@TipoDoNotificador(NivelUrgencia.NORMAL)
 @Component
 public class NotificadorEmail implements Notificador {
-
-	// Usando a anotação @Qualifier para qualificar o componente e inserir um identificador 
 
 	@Override
 	public void notificar(Cliente cliente, String mensagem) {
