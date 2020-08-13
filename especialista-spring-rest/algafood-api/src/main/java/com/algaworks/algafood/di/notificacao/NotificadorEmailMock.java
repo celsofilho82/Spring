@@ -9,7 +9,6 @@ import com.algaworks.algafood.di.modelo.Cliente;
 // No arquivo aplication.properties devemos informar qual ambiente estamos através desta declaração: spring.profiles.active={ambiente}
 
 @Profile("dev")
-@TipoDoNotificador(NivelUrgencia.NORMAL)
 @Component
 public class NotificadorEmailMock implements Notificador {
 

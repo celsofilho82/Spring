@@ -1,7 +1,9 @@
 package com.algaworks.algafood.di.service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.di.modelo.Cliente;
@@ -14,9 +16,20 @@ public class AtivacaoClienteService {
 	
 	//Usando a anotação customizada para definir um qualificador para a classe
 	@TipoDoNotificador(NivelUrgencia.NORMAL)
-	@Qualifier("email")
 	@Autowired
 	private Notificador notificador;
+	
+	// Esse método será executado quando o bean for carregado
+	@PostConstruct
+	public void init() {
+		System.out.println("INIT");
+	}
+	
+	// Esse método será executado antes que o bean seja destruido
+	@PreDestroy
+	public void destroy() {
+		System.out.println("DESTROY");
+	}
 
 	public void ativar(Cliente cliente) {
 		cliente.ativar();
