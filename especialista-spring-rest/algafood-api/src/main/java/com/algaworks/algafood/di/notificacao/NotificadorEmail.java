@@ -1,6 +1,6 @@
 package com.algaworks.algafood.di.notificacao;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.di.modelo.Cliente;
@@ -9,21 +9,15 @@ import com.algaworks.algafood.di.modelo.Cliente;
 @TipoDoNotificador(NivelUrgencia.NORMAL)
 @Component
 public class NotificadorEmail implements Notificador {
-
-	// Usando a anotação @Value para obter as configurações definidas no arquivos
-	// application.properties
 	
-	@Value("${notificador.email.host-servidor}")
-	private String host;
-
-	@Value("${notificador.email.porta-servidor}")
-	private Integer porta;
+	@Autowired
+	private NotificadorProperties properties;
 
 	@Override
 	public void notificar(Cliente cliente, String mensagem) {
 		
-		System.out.println("Host: " + host);
-		System.out.println("Porta: " + porta);
+		System.out.println("Host: " + properties.getHostServidor());
+		System.out.println("Porta: " + properties.getPortaServidor());
 		
 		System.out.printf("Notificando %s através do e-mail %s: %s\n", cliente.getNome(), cliente.getEmail(), mensagem);
 	}
