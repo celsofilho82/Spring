@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 import com.algaworks.algafood.AlgafoodApiApplication;
 import com.algaworks.algafood.domain.model.Cozinha;
 
-public class InclusaoCozinhaMain {
+public class BuscaCozinhaMain {
 
 	public static void main(String[] args) {
 		ApplicationContext aplicationContext = 
@@ -17,14 +17,8 @@ public class InclusaoCozinhaMain {
 		
 		CadastroCozinha cadastroCozinha = aplicationContext.getBean(CadastroCozinha.class);
 		
-		Cozinha cozinha1 = new Cozinha();
-		cozinha1.setNome("Brasileira");
-		
-		Cozinha cozinha2 = new Cozinha();
-		cozinha2.setNome("Japonesa");
-		
-		cadastroCozinha.adicionar(cozinha1);
-		cadastroCozinha.adicionar(cozinha2);
+		Cozinha cozinha = cadastroCozinha.buscar(1L);
+		System.out.println(cozinha.getNome());
 	}
 	
 

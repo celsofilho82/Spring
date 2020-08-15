@@ -1,5 +1,7 @@
 package com.algaworks.algafood.jpa;
 
+import java.util.List;
+
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -16,15 +18,11 @@ public class ConsultaCozinhaMain {
 				.run(args);
 		
 		CadastroCozinha cadastroCozinha = aplicationContext.getBean(CadastroCozinha.class);
+		List<Cozinha> cozinhas = cadastroCozinha.listar();
 		
-		Cozinha cozinha1 = new Cozinha();
-		cozinha1.setNome("Brasileira");
-		
-		Cozinha cozinha2 = new Cozinha();
-		cozinha2.setNome("Japonesa");
-		
-		cadastroCozinha.adicionar(cozinha1);
-		cadastroCozinha.adicionar(cozinha2);
+		for (Cozinha cozinha : cozinhas) {
+			System.out.println(cozinha.getNome());
+		}
 	}
 	
 
