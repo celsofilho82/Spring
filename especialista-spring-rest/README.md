@@ -8,7 +8,7 @@
 
 + Spring e Injeção de Dependências. :heavy_check_mark:
 
-+ JPA, Hibernate e Flyway.
++ Introdução ao JPA e Hibernate. :heavy_check_mark:
 
 + Spring Data JPA.
 
