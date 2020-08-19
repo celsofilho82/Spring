@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -13,6 +14,7 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 // Nesta classe temos a implementação dos métodos de persistência 
 // usando o padrão repository
 
+@Component
 public class RestauranteRepositoryJpa implements RestauranteRepository{
 
 	@PersistenceContext
