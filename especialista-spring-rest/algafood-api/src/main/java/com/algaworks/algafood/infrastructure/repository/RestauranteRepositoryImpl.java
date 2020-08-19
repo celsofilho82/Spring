@@ -15,7 +15,7 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 // usando o padrão repository
 
 @Component
-public class RestauranteRepositoryJpa implements RestauranteRepository{
+public class RestauranteRepositoryImpl implements RestauranteRepository{
 
 	@PersistenceContext
 	private EntityManager manager;

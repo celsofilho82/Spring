@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.algaworks.algafood.AlgafoodApiApplication;
 import com.algaworks.algafood.domain.model.Restaurante;
-import com.algaworks.algafood.infrastructure.repository.RestauranteRepositoryJpa;
+import com.algaworks.algafood.infrastructure.repository.RestauranteRepositoryImpl;
 
 public class ConsultaRestauranteMain {
 
@@ -17,7 +17,7 @@ public class ConsultaRestauranteMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		RestauranteRepositoryJpa restauranteRepository = applicationContext.getBean(RestauranteRepositoryJpa.class);
+		RestauranteRepositoryImpl restauranteRepository = applicationContext.getBean(RestauranteRepositoryImpl.class);
 		
 		List<Restaurante> todosRestaurantes = restauranteRepository.listar();
 		
