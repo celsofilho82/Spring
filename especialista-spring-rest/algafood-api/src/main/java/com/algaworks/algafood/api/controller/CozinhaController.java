@@ -67,7 +67,7 @@ public class CozinhaController {
 
 		if (cozinhaAtual != null) {
 			cozinhaAtual.setNome(cozinha.getNome());
-			Cozinha cozinhaAtualizada = cozinhaRepository.salvar(cozinhaAtual);
+			Cozinha cozinhaAtualizada = cadastroCozinha.salvar(cozinhaAtual);
 			return ResponseEntity.ok(cozinhaAtualizada);
 		}
 

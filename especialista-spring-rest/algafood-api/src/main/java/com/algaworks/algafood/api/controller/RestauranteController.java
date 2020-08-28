@@ -9,27 +9,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.algafood.domain.model.Estado;
-import com.algaworks.algafood.domain.repository.EstadoRepository;
+import com.algaworks.algafood.domain.model.Restaurante;
+import com.algaworks.algafood.domain.repository.RestauranteRepository;
 
 @RestController
-@RequestMapping("/estados")
-public class EstadoController {
+@RequestMapping(value = "/restaurantes")
+public class RestauranteController {
 
 	@Autowired
-	private EstadoRepository estadoRepository;
+	private RestauranteRepository restauranteRepository;
 
 	@GetMapping
-	public List<Estado> listar() {
-		return estadoRepository.listar();
+	private List<Restaurante> listar() {
+		return restauranteRepository.listar();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Estado> buscar(@PathVariable Long id) {
-		Estado estado = estadoRepository.buscar(id);
+	private ResponseEntity<Restaurante> buscar(@PathVariable Long id) {
+		Restaurante restaurante = restauranteRepository.buscar(id);
 
-		if (estado != null) {
-			return ResponseEntity.ok(estado);
+		if (restaurante != null) {
+			return ResponseEntity.ok(restaurante);
 		}
 
 		return ResponseEntity.notFound().build();
