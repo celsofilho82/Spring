@@ -10,40 +10,44 @@
 
 + Introdução ao JPA e Hibernate. :heavy_check_mark:
 
++ REST com Spring. :heavy_check_mark:
+
 + Spring Data JPA.
 
-+ Domain-Driven Design (DDD).
++ Explorando mais do JPA e Hibernate.
 
-+ Fundamentos avançados de REST com Spring.
-
-+ Validações com Bean Validation.
++ Pool de conexões e Flyway.
 
 + Tratamento e modelagem de erros da API.
 
-+ Testes de integração.
++ Validações com Bean Validation.
 
-+ Boas práticas e modelagem avançada de APIs.
++ Testes de Integração.
+
++ Boas práticas e técnicas para APIs.
+
++ Modelagem avançada e implementação da API.
 
 + Modelagem de projeções, pesquisas e relatórios.
 
-+ Upload e download de arquivos.
++ Upload e Download de arquivos.
 
-+ Envio de e-mails transacionais.
-
-+ Cache de HTTP.
-
-+ Documentação com OpenAPI (Swagger).
-
-+ HATEOAS e Discoverability.
++ Emails transacionais e Domain Events.
 
 + CORS e consumo de APIs com Java e JavaScript.
 
-+ Segurança com Spring Security, OAuth2 e JWT.
++ Cache de HTTP.
 
-+ Cloud-native APIs.
++ Documentação da API com OpenAPI, Swagger UI e SpringFox.
 
-+ Deploy em produção na nuvem.
-
-+ Configuração e gerenciamento de logs.
++ Discoverability e HATEOAS.
 
 + Versionamento de APIs.
+
++ Logging.
+
++ Segurança com Spring Security e OAuth2.
+
++ OAuth2 avançado com JWT e controle de acesso
+
++ Deploy em produção
