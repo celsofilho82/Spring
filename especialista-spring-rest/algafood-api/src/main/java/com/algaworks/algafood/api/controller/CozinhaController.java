@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,21 +36,21 @@ public class CozinhaController {
 
 	@GetMapping()
 	public List<Cozinha> listar() {
-		return cozinhaRepository.listar();
+		return cozinhaRepository.findAll();
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public CozinhasXmlWrapper listarXml() {
-		return new CozinhasXmlWrapper(cozinhaRepository.listar());
+		return new CozinhasXmlWrapper(cozinhaRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
-		Cozinha cozinha = cozinhaRepository.buscar(id);
+		Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
 
-		if (cozinha != null) {
+		if (cozinha.isPresent()) {
 			// return ResponseEntity.status(HttpStatus.OK).body(cozinha);
-			return ResponseEntity.ok(cozinha);
+			return ResponseEntity.ok(cozinha.get());
 		}
 		// return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.notFound().build();
@@ -63,11 +64,11 @@ public class CozinhaController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha) {
-		Cozinha cozinhaAtual = cozinhaRepository.buscar(id);
+		Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(id);
 
-		if (cozinhaAtual != null) {
-			cozinhaAtual.setNome(cozinha.getNome());
-			Cozinha cozinhaAtualizada = cadastroCozinha.salvar(cozinhaAtual);
+		if (cozinhaAtual.isPresent()) {
+			cozinhaAtual.get().setNome(cozinha.getNome());
+			Cozinha cozinhaAtualizada = cadastroCozinha.salvar(cozinhaAtual.get());
 			return ResponseEntity.ok(cozinhaAtualizada);
 		}
 
