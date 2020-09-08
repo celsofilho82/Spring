@@ -2,6 +2,7 @@ package com.algaworks.algafood.teste;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,11 +40,32 @@ public class TesteController {
 	public List<Cozinha> cozinhasContemNome(@RequestParam String nome) {
 		return cozinhaRepository.findTodasByNomeContaining(nome);
 	}
+	
+	@GetMapping("/cozinhas/exists")
+	public boolean cozinhaExists(String nome) {
+		return cozinhaRepository.existsByNome(nome);
+	}
 
 	@GetMapping("/restarantes/taxafrete")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Restaurante> restaurantesPorTaxafrete(@RequestParam 
 			BigDecimal taxaInicial, BigDecimal taxaFinal) {
 		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
+	}
+	
+	@GetMapping("/restaurantes/primeiro")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Optional<Restaurante> primeiroRestaurante(@RequestParam String nome) {
+		return restauranteRepository.findFirstByNomeContaining(nome);
+	}
+	
+	@GetMapping("/restaurantes/top2-por-nome")
+	public List<Restaurante> restaurantesTop2PorNome(String nome) {
+		return restauranteRepository.findTop2ByNomeContaining(nome);
+	}
+	
+	@GetMapping("/restaurantes/count-por-cozinha")
+	public int restaurantesCountPorCozinha(Long cozinhaId) {
+		return restauranteRepository.countByCozinhaId(cozinhaId);
 	}
 }
