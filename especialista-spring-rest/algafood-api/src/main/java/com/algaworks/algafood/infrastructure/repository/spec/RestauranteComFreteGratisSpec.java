@@ -16,9 +16,8 @@ public class RestauranteComFreteGratisSpec implements Specification<Restaurante>
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Predicate toPredicate(Root<Restaurante> root, CriteriaQuery<?> query, 
-			CriteriaBuilder builder) {
-		
+	public Predicate toPredicate(Root<Restaurante> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+
 		return builder.equal(root.get("taxaFrete"), BigDecimal.ZERO);
 	}
 

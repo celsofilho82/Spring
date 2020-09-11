@@ -12,20 +12,21 @@ import com.algaworks.algafood.domain.model.Restaurante;
 
 // Nessa classe são definidos os métodos de persistência 
 @Repository
-public interface RestauranteRepository 
-	extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, JpaSpecificationExecutor<Restaurante> {
-	
+public interface RestauranteRepository
+		extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, JpaSpecificationExecutor<Restaurante> {
+
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
-	
+
 	Optional<Restaurante> findFirstByNomeContaining(String nome);
-	
+
 	List<Restaurante> findTop2ByNomeContaining(String nome);
-	
+
 	int countByCozinhaId(Long cozinha);
-	
+
 	// @Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
-	// Externalizando essa consulta JPQL para um arquivo XML (src/main/resources/META-INF/orm.xml)
+	// Externalizando essa consulta JPQL para um arquivo XML
+	// (src/main/resources/META-INF/orm.xml)
 	List<Restaurante> consultarPorNome(String nome, Long id);
-	
+
 	List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 }

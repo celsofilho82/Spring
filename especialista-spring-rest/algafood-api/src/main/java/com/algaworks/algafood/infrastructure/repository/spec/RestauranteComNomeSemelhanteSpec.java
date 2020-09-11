@@ -17,11 +17,10 @@ public class RestauranteComNomeSemelhanteSpec implements Specification<Restauran
 	private static final long serialVersionUID = 1L;
 
 	private String nome;
-	
+
 	@Override
-	public Predicate toPredicate(Root<Restaurante> root, CriteriaQuery<?> query, 
-			CriteriaBuilder builder) {
-		
+	public Predicate toPredicate(Root<Restaurante> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+
 		return builder.like(root.get("nome"), "%" + nome + "%");
 	}
 

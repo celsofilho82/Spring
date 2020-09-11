@@ -43,7 +43,7 @@ public class TesteController {
 	public List<Cozinha> cozinhasContemNome(@RequestParam String nome) {
 		return cozinhaRepository.findTodasByNomeContaining(nome);
 	}
-	
+
 	@GetMapping("/cozinhas/exists")
 	public boolean cozinhaExists(String nome) {
 		return cozinhaRepository.existsByNome(nome);
@@ -51,41 +51,40 @@ public class TesteController {
 
 	@GetMapping("/restarantes/taxafrete")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<Restaurante> restaurantesPorTaxafrete(@RequestParam 
-			BigDecimal taxaInicial, BigDecimal taxaFinal) {
+	public List<Restaurante> restaurantesPorTaxafrete(@RequestParam BigDecimal taxaInicial, BigDecimal taxaFinal) {
 		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
 	}
-	
+
 	@GetMapping("/restaurantes/primeiro")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Optional<Restaurante> primeiroRestaurante(@RequestParam String nome) {
 		return restauranteRepository.findFirstByNomeContaining(nome);
 	}
-	
+
 	@GetMapping("/restaurantes/top2-por-nome")
 	public List<Restaurante> restaurantesTop2PorNome(String nome) {
 		return restauranteRepository.findTop2ByNomeContaining(nome);
 	}
-	
+
 	@GetMapping("/restaurantes/count-por-cozinha")
 	public int restaurantesCountPorCozinha(Long cozinhaId) {
 		return restauranteRepository.countByCozinhaId(cozinhaId);
 	}
-	
+
 	@GetMapping("/restaurantes/por-nome")
 	public List<Restaurante> restaurantesPorNome(@RequestParam String nome, Long id) {
 		return restauranteRepository.consultarPorNome(nome, id);
 	}
-	
+
 	@GetMapping("/restaurantes/por-nome-e-frete")
-	public List<Restaurante> restaurantesPorNomeFrete(@RequestParam String nome, BigDecimal taxaInicial, BigDecimal taxaFinal) {
+	public List<Restaurante> restaurantesPorNomeFrete(@RequestParam String nome, BigDecimal taxaInicial,
+			BigDecimal taxaFinal) {
 		return restauranteRepository.find(nome, taxaInicial, taxaFinal);
 	}
-	
+
 	@GetMapping("/restaurantes/com-frete-gratis")
 	public List<Restaurante> restaurantesComFreteGratis(String nome) {
-		
-		return restauranteRepository.findAll(comFreteGratis()
-				.and(comNomeSemelhante(nome)));
+
+		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 	}
 }
