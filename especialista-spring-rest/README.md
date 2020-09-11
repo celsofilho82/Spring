@@ -12,7 +12,7 @@
 
 + REST com Spring. :heavy_check_mark:
 
-+ Spring Data JPA.
++ Spring Data JPA. :heavy_check_mark:
 
 + Explorando mais do JPA e Hibernate.
 
