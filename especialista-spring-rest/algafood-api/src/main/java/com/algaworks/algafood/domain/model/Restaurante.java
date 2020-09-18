@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +37,9 @@ public class Restaurante {
 	
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
+	
+	@Embedded
+	private Endereco endereco;
 	
 	@ManyToOne
 	private Cozinha cozinha;
