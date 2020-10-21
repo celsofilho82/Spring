@@ -14,9 +14,9 @@
 
 + Spring Data JPA. :heavy_check_mark:
 
-+ Explorando mais do JPA e Hibernate.
++ Explorando mais do JPA e Hibernate. :heavy_check_mark:
 
-+ Pool de conexões e Flyway.
++ Pool de conexões e Flyway. :heavy_check_mark:
 
 + Tratamento e modelagem de erros da API.
 
