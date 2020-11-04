@@ -13,6 +13,10 @@ import com.algaworks.algafood.domain.repository.CozinhaRepository;
 @Service
 public class CadastroCozinhaService {
 
+	private static final String MSG_COZINHA_EM_USO = "Cozinha de código %d não pode ser removida pois está em uso";
+
+	private static final String MSG_COZINHA_NAO_ENCONTRADA = "Não existe uma Cozinha com esse código %d";
+
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 
@@ -24,12 +28,15 @@ public class CadastroCozinhaService {
 		try {
 			cozinhaRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(
-					String.format("Cozinha de código %d não pode ser removida pois está em uso", id));
-		} catch(EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe uma Cozinha com esse código %d", id));
+			throw new EntidadeEmUsoException(String.format(MSG_COZINHA_EM_USO, id));
+		} catch (EmptyResultDataAccessException e) {
+			throw new EntidadeNaoEncontradaException(String.format(MSG_COZINHA_NAO_ENCONTRADA, id));
 		}
 
+	}
+
+	public Cozinha buscarOuFalhar(Long cozinhaId) {
+		return cozinhaRepository.findById(cozinhaId).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
 	}
 }
