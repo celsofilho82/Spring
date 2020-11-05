@@ -9,3 +9,5 @@ Ao inserimos a anotação ```@ResponseStatus``` especificando o código de ```Ht
 ex:
 ```@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Entidade não encontrada")``` 
 
+## Lançando exceções do tipo ResponseStatusException
+
