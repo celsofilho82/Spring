@@ -3,6 +3,7 @@ package br.com.alura.jpa.modelo;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +24,13 @@ public class Conta {
 	 * mappepBy criamos um relacionamento bi-direcional entre as entidades na JPA
 	 * evitando que ele crie duas vezes o relacionamento no banco(chave estrangeira
 	 * e tabela de relacionamento).
+	 * 
+	 * Para mudar o comportamento de um relacionamento @ToMany que é do tipo Lazy,
+	 * podemos usar o atributo fetch e definir o tipo de comportamento que quisermos
+	 * para o relacionamentos. Nesse exemplo definimos que os dados devem ser
+	 * carregados de forma antecipada FetchType.EAGER
 	 */
-	@OneToMany(mappedBy = "conta")
+	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
 	private List<Movimentacao> movimentacoes;
 
 	public void setSaldo(Double saldo) {
