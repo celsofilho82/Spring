@@ -21,4 +21,5 @@ Lista de repositorios e cursos concluidos abordando o framework Spring
 
 + [Spring Boot: Construa uma API Rest](spring-boot-parte01)
 + [Spring Boot: Segurança da API, Cache e Monitoramento](spring-boot-parte02)
++ [Java e JPA: Pesquise com JPQL e Criteria](jpa)
 + [Curso Algaworks: Especialista Spring REST](especialista-spring-rest)
