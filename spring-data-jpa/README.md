@@ -81,8 +81,8 @@
         Conclusão
 
 
-<!-- # Certificado de conclusão
+# Certificado de conclusão
 
-https://cursos.alura.com.br/certificate/88174ee5-6d89-4220-a8f3-216fa22780bf
+https://cursos.alura.com.br/certificate/8e12558d-041d-4d30-82b5-f45e8609a5cb
 
-![certificado](certificate-alura.png) -->
+![certificado](certificate-alura.png)
