@@ -24,4 +24,5 @@ Lista de repositorios e cursos concluidos abordando o framework Spring
 + [Spring Boot: Profiles, Testes e Deploy](spring-boot-parte03)
 + [Spring Data JPA: Repositórios, Consultas, Projeções e Specifcations](spring-data-jpa)
 + [Java e JPA: Pesquise com JPQL e Criteria](jpa)
++ [Persistência com JPA: Introdução ao Hibernate](JPA-Introducao-Hibernate)
 + [Curso Algaworks: Especialista Spring REST](especialista-spring-rest)
